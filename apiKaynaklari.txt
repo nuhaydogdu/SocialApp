@@ -1,0 +1,4 @@
+JSONPlaceholder
+The Movie Database Api
+FOOD2FORK (Yemekle Alakalı api)
+iyzico (Kredi kartı entagrasonu ile alakalı bir api)

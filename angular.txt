@@ -1,0 +1,50 @@
+C:\Users\nuhay>dotnet --version
+C:\Users\nuhay>node --version
+C:\Users\nuhay>npm --version
+C:\Users\nuhay>npm install -g @angular/cli
+C:\Users\nuhay>npm list -g @angular/cli --depth=0
+vsCode-> extensions  .NET Core Extension Pack  
+son olarak sql işlemleri için SQLLite indirdim. 
+-------------------------------------------------
+ANGULAR PROJESİ OLUŞTURMAK İÇİN CMD VEYA TERMİNALDEN
+ilk olarak -> C:\Users\nuhay>ng version ile version mevcutmu konntrolü yapıyorum
+eğer yoksa -> path olarak eklemem gerekiyor (C:\Users\nuhay\AppData\Roaming\npm)
+var olduğundan emin olduktan sonra -> 
+C:\Users\nuhay\Desktop>ng new SocialApp --directory SocialApp/ClientApp 
+--routing true --style css --skip-tests true --skip-git true 
+------------------------------------------------
+1) package.json dosyası içerisindeki "scripts"{} içerisine "start": "ng start", ekleyerek. 
+Terminalden npm start dediğimde angular projemin çalışmasını sağlıyorum.
+2)PS C:\Users\nuhay\Desktop\SocialApp> mkdir ServerApp 
+mkdir ile ilgili dosya yolu altına vereceğimiz isimde(ServerApp) yeni bir klasör oluşturuyor.
+
+3)PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet new globaljson --sdk-version 3.1.101
+buradaki komut ile ServerApp kısmında globaljson dosyası oluşturup, içerisine handi dotnet versiyonunu kullanacağımızı söylüyoruz.
+
+4)PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet new webapi
+(PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet -h(--help komutu dökümantasyonabakmak için)) 
+Bunun sayesinde ServerApp altına bir webapi projesi oluşturuluyor.
+
+5)view-> Command palette(ctrl+shift+p) burada 
+.NET:Generate Assets for Build and Debug 
+seçeneğini seçerek .vscode uzantılı klasörün oluşmasını sağlıyoruz bu bize bazı faydalar sağlıyor.
+launchSettings.json içerisinde "applicationUrl"'i düzenledik, Startup.cs içerisinde  // app.UseHttpsRedirection(); yorum satırına aldık.
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet run
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet watch run  (çalışırken yapılan değişikliklerde anında işleniyor.)
+----------------------------------------------
+----ServerApp projemize yapıyoruz bunları----
+6)ApiController işlemleri yaptık (Http Requests)
+
+7)Entity Framework Core'u projeme dahil edeceğim (hangi veritabanı sağlayıcısını kullanacaksak o veritabanı sağlayıcısının döküanını projeye ekliyor olmam gerekiyor. search=> ef core providers)
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 3.1.4
+Terminal ekranımdan bu komut ile projeme dahil ettim.
+Dahil ettikten sonra DataContext: DbContext sınıfımı oluşturuyorum.
+DataContext sınıfım içerisnde ilgli model sınıflarımın DbSet'lerini tanımlıyorum daha sonra startup.cs içerisinde ConfigureServices içerisine connectionStringimi belirliyorum.
+
+8)Migration işlemlerimi yapabilmek için 
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet tool (un)install --global dotnet-ef (veri tabanımızı oluşturmak için ekstra komutlara ihtiyacımız var bu komutlarda ekstra bir paket içerisinde)
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialCreate (bunu çalıştırınca design kütüphanesini eklememi istedi o yüzden aşağıdaki işlemi yaptım)
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.4  (işlem tamamlanınca ServerApp.csproj dosyası içerisinde ilgili kütüphanelerin eklenmiş olması gerekiyor.)
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialCreate
+PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef database update
+
