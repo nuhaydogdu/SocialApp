@@ -66,5 +66,34 @@ namespace ServerApp.Controllers
             return CreatedAtAction(nameof(GetProduct), new{id=entity.ProductId},entity);
             //CreatedAtAction bu method bize 201 durum koduyla beraber geri dönüyor
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, Product entity)
+        {
+            if (id!=entity.ProductId)
+            {
+                return BadRequest();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+
+            if(product==null)
+            {
+                return NotFound();
+            }
+
+            product.Name=entity.Name;
+            product.price=entity.price;
+            try{
+                await _context.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                return NotFound();
+            }
+            return NoContent();
+            //NoContent 204 kodunu geriye döndürüyor. 
+
+        }
     }
 }
