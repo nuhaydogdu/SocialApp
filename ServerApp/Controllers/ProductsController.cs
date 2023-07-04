@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerApp.Data;
+using ServerApp.DTO;
 using ServerApp.Models;
 
 namespace ServerApp.Controllers
@@ -43,18 +44,24 @@ namespace ServerApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProducts(){
             
-            var products = await _context.Products.ToListAsync();
+            //burada almış olduğumuz objeleri dto objesi içerisine paketliyoruz.
+            //bu şekilde tüm ürünler listelenirken secret bilgisi görünmez!
+            var products = await _context
+                                    .Products
+                                    .Select(p=>ProductToDto(p))
+                                    .ToListAsync();
             return Ok(products);
         }
  
         //localhost:5000/api/products/2
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id){
-            var p = await _context.Products.FirstOrDefaultAsync(i=>i.ProductId==id);
+
+            var p = await _context.Products.FindAsync(id);
             if(p==null){
                 return NotFound();
             }
-            return Ok(p); 
+            return Ok(ProductToDto(p)); 
             // 200 durum koduyla beraber ilgili objeyide responsun içerisnde ekler ve bize bunu geriye gönderir
         }
 
@@ -63,7 +70,7 @@ namespace ServerApp.Controllers
         {
             _context.Products.Add(entity);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProduct), new{id=entity.ProductId},entity);
+            return CreatedAtAction(nameof(GetProduct), new{id=entity.ProductId},ProductToDto(entity));
             //CreatedAtAction bu method bize 201 durum koduyla beraber geri dönüyor
         }
 
@@ -94,6 +101,32 @@ namespace ServerApp.Controllers
             return NoContent();
             //NoContent 204 kodunu geriye döndürüyor. 
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if(product==null)
+            {
+                return NotFound();
+            }
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private static ProductDTO ProductToDto(Product p)
+        {
+            return new ProductDTO()
+            {
+                ProductId= p.ProductId,
+                Name=p.Name,
+                price=p.price,
+                isActive=p.isActive
+            };
         }
     }
 }

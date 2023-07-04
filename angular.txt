@@ -48,3 +48,8 @@ PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet add package Microsoft.Enti
 PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialCreate
 PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef database update
 
+9)DTO(data transfer objeleri)
+        //Data transfer objeleri DTO
+        //product Modelsınıfındaki içeriği buraya aldım ama istemediklerimi(kullanıcıya görünmesini istemediklerimi) buradan çıkardım 
+        //İlk olarak dto yu bu şekilde yazdık daha sonra ProductController içerisindeki GetProducts içerisnde kullandım
+        //heryerde kullanamk steyeceğim için bunu bir method şekline çevirdim ProductToDto
