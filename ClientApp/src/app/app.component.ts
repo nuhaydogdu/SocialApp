@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Model } from './Model';
 
 @Component({
   selector: 'app-root',  //AppComponenti uygulamammız içerisinde app-route olarak çağıracağım.
@@ -8,11 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SocialApp';
-  CategoryName="Telefon"
-  products= [
-  {id:1, name:"samsung s1", price:1000, isActive:true},
-  {id:2, name:"samsung s2", price:2000, isActiv:true},
-  {id:3, name:"samsung s3", price:3000, isActive:false},
-  {id:4, name:"samsung s4", price:4000, isActive:true}
-   ];
+  model =new Model();
+
+  getName(){
+    return this.model.categoryName;
+  }
+
+  getProducts(){
+    return this.model.products;
+  }
 }
