@@ -1,24 +1,13 @@
-<h3 class="bg-primary text-white p-2"> {{getName()}} Katagorisi</h3>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Price</th>
-      <th></th>
 
-    </tr>
-  </thead>
-  <tbody>
-    <!-- burada isActive değerinin false olmasına göre tr tagına .bg-secondary clasını ekle yağıyoruz(ilgili satırların zeminlerinin gri olması gerekiyor) -->
-    <tr *ngFor="let p of getProducts()" [class.bg-secondary]="p.isActive==false">
-      <td>{{p.id}}</td>
-      <td>{{p.name}}</td>
-      <td>{{p.price}}</td>
-      <td>
-         <button class="btn btn-primary"> Edit</button>
-         <button class="btn btn-danger"> Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<navbar></navbar>
+
+<div calass="container" style="margin-top: 100px">
+  <div class="row">
+    <div class="col-md-7">
+      <products></products>
+    </div>
+    <div class="col-md-5">
+      <product-form></product-form>
+    </div>
+  </div>
+</div>

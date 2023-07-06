@@ -73,3 +73,11 @@ AppComponenet class tanımlamasının içinde, örneğin servis üzerinden bilgi
 Tüm Componenetlere ortak css yazmak istersem angular.json içerisindeki "styles": ["src/styles.css"], tanımlaması sayesinde tüm Componentler için ortak olan css'i src->style.css içerisine yazıyoruz.
 PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install bootstrap@4.5.0 (bootstrap'i Angular projemize dahil ediyoruz)
 bootstrap'i projeye ekledikten sonra angular.json dosyası içerisindeki "styles" içerisinde boostrap css dosyasının yolunu belirliyoruz. daha sonrasında index.html içerisindeki body'e class="bg-primary" ekledik
+
+12)src->app->app.component.ts içerisndeki AppComponent içerisinde verilerimizi alıp html sayfamıza gönderiyoruz.
+html sayfasında karşılamak için {{}} bu işaret kullanılıyor
+farklı bir takım kullanımlar var ona app.component.html sayfasından bakabilirim.(<tr *ngFor="let p of getProducts()" [class.bg-secondary]="p.isActive==false">)
+
+13)Yeni bir component oluşturmak için 
+PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate component navbar (ng g c navbar ->navbar componenti oluşturmanın kısa yolu)
+eklediğimiz navbarComponent'te appModule'nin bir parçası olacaktır(AppModule içerisine NAvbar component olarak eklenmiş oluyor)
