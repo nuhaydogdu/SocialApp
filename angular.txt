@@ -5,16 +5,21 @@ C:\Users\nuhay>npm install -g @angular/cli
 C:\Users\nuhay>npm list -g @angular/cli --depth=0
 vsCode-> extensions  .NET Core Extension Pack  
 son olarak sql işlemleri için SQLLite indirdim. 
--------------------------------------------------
+
+----------------ANGULAR(ClientApp)--------------------------------
+
 ANGULAR PROJESİ OLUŞTURMAK İÇİN CMD VEYA TERMİNALDEN
 ilk olarak -> C:\Users\nuhay>ng version ile version mevcutmu konntrolü yapıyorum
 eğer yoksa -> path olarak eklemem gerekiyor (C:\Users\nuhay\AppData\Roaming\npm)
 var olduğundan emin olduktan sonra -> 
 C:\Users\nuhay\Desktop>ng new SocialApp --directory SocialApp/ClientApp 
 --routing true --style css --skip-tests true --skip-git true 
-------------------------------------------------
+
 1) package.json dosyası içerisindeki "scripts"{} içerisine "start": "ng start", ekleyerek. 
 Terminalden npm start dediğimde angular projemin çalışmasını sağlıyorum.
+
+----------------WEB.APİ(ServerApp)--------------------------------
+
 2)PS C:\Users\nuhay\Desktop\SocialApp> mkdir ServerApp 
 mkdir ile ilgili dosya yolu altına vereceğimiz isimde(ServerApp) yeni bir klasör oluşturuyor.
 
@@ -31,8 +36,7 @@ seçeneğini seçerek .vscode uzantılı klasörün oluşmasını sağlıyoruz b
 launchSettings.json içerisinde "applicationUrl"'i düzenledik, Startup.cs içerisinde  // app.UseHttpsRedirection(); yorum satırına aldık.
 PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet run
 PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet watch run  (çalışırken yapılan değişikliklerde anında işleniyor.)
-----------------------------------------------
-----ServerApp projemize yapıyoruz bunları----
+
 6)ApiController işlemleri yaptık (Http Requests)
 
 7)Entity Framework Core'u projeme dahil edeceğim (hangi veritabanı sağlayıcısını kullanacaksak o veritabanı sağlayıcısının döküanını projeye ekliyor olmam gerekiyor. search=> ef core providers)
@@ -49,7 +53,23 @@ PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialC
 PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef database update
 
 9)DTO(data transfer objeleri)
-        //Data transfer objeleri DTO
-        //product Modelsınıfındaki içeriği buraya aldım ama istemediklerimi(kullanıcıya görünmesini istemediklerimi) buradan çıkardım 
-        //İlk olarak dto yu bu şekilde yazdık daha sonra ProductController içerisindeki GetProducts içerisnde kullandım
-        //heryerde kullanamk steyeceğim için bunu bir method şekline çevirdim ProductToDto
+//Data transfer objeleri DTO
+//product Modelsınıfındaki içeriği buraya aldım ama istemediklerimi(kullanıcıya görünmesini istemediklerimi) buradan çıkardım 
+//İlk olarak dto yu bu şekilde yazdık daha sonra ProductController içerisindeki GetProducts içerisnde kullandım
+//heryerde kullanamk steyeceğim için bunu bir method şekline çevirdim ProductToDto
+
+----------------ANGULAR(ClientApp)--------------------------------
+
+10)Angular9 temel özellikler 
+package.json node_modules klasöründe bulunan paketlerin isimlerini(meta bilgilerini) tutuyor. Başaka bir yere projemiz taşıdığımız zaman node_modules' ü taşımaya gerek yok.
+Terminale (npm install) yazdığımızda otomatik olarak package.json dosyasına göre yükleyecek.
+Uygulamamızın bir başlangıç module'si oluyor ve buşlangıç module'sinin bir başlangıç componenti oluyor.
+src->app->app.module.ts
+src->app->app.component.ts
+Uygulama çalıştığı zaman şu module ile başlaman gerekiyor talimatı kısmını(src-> main.ts)
+
+11)AppComponent html sayfasına dinamik  bir bilgi göndermek istiyorsam 
+AppComponenet class tanımlamasının içinde, örneğin servis üzerinden bilgiyi alıp html sayfasına gönderebiliyoruz.
+Tüm Componenetlere ortak css yazmak istersem angular.json içerisindeki "styles": ["src/styles.css"], tanımlaması sayesinde tüm Componentler için ortak olan css'i src->style.css içerisine yazıyoruz.
+PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install bootstrap@4.5.0 (bootstrap'i Angular projemize dahil ediyoruz)
+bootstrap'i projeye ekledikten sonra angular.json dosyası içerisindeki "styles" içerisinde boostrap css dosyasının yolunu belirliyoruz. daha sonrasında index.html içerisindeki body'e class="bg-primary" ekledik
