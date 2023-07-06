@@ -81,3 +81,7 @@ farklı bir takım kullanımlar var ona app.component.html sayfasından bakabili
 13)Yeni bir component oluşturmak için 
 PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate component navbar (ng g c navbar ->navbar componenti oluşturmanın kısa yolu)
 eklediğimiz navbarComponent'te appModule'nin bir parçası olacaktır(AppModule içerisine NAvbar component olarak eklenmiş oluyor)
+
+14)service dosyası oluşturmak için 
+PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate service product (ng g s product)
+hangi contructor.ts te kullanacaksam o sınıfın constructeriene (constructor(private productService: ProductService){}) ekleyince kendisi direkt dahil ediyor

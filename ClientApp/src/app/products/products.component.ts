@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-import { Model } from '../Model';
+import { ProductService } from '../product.service';
+import { Product } from '../Model';
 
 @Component({
   selector: 'products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent {
+export class ProductsComponent{
 
-  model =new Model();
+  products: Product[];
 
-  getName(){
-    return this.model.categoryName;
+  constructor(private productService: ProductService) {
+    this.products = this.productService.getProducts();
   }
 
-  getProducts(){
-    return this.model.products;
-  }
 }
