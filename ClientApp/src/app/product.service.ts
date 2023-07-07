@@ -16,7 +16,27 @@ export class ProductService {
     return this.model.products;
   }
 
-  addProduct(product: Product){
-    this.model.products.push(product);
+  getproductById(id: number){
+    return this.model.products.find(i=>i.id==id);
   }
+
+  saveProduct(product: Product) {
+    if (product.id === 0) {
+      product.id=this.getProducts().length+1;
+      this.model.products.push(product);
+    } else {
+      const p = this.getproductById(product.id);
+      if (p) {
+        p.name = product.name;
+        p.price = product.price;
+        p.isActive = product.isActive;
+      }
+    }
+  }
+
+  deleteProduct(product: Product){
+   this.model.products= this.model.products.filter(p=>p!==product);
+   //tüm products listesini dolaşıyor product' e eşit olmayanları tekrar ekliyor eşit olanı çıkarıyor böyle bir filtreleme.
+  }
+
 }

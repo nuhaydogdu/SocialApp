@@ -13,22 +13,27 @@
         </thead>
         <tbody>
           <!-- burada isActive değerinin false olmasına göre tr tagına .bg-secondary clasını ekle yağıyoruz(ilgili satırların zeminlerinin gri olması gerekiyor) -->
-          <tr *ngFor="let p of products" [class.bg-secondary]="p.isActive==false">
+          <tr *ngFor="let p of getProducts()" [class.bg-secondary]="p.isActive==false">
             <td>{{p.id}}</td>
             <td>{{p.name}}</td>
             <td>{{p.price}}</td>
             <td>
                <button class="btn btn-primary" (click)="onSelectedProduct(p)"> Edit</button>
-               <button class="btn btn-danger"> Delete</button>
+               <button class="btn btn-danger" (click)="deleteProduct(p)"> Delete</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="col-md-5">
-      <product-form></product-form>
+
       <product-details [product]="selectedProduct"></product-details>
       <!-- burda product-details'e parametre olarak gönderiyoruz ve product-details.ts içerisinde karşılıyoruz. -->
+
+      <hr class="my-3">
+
+      <product-form></product-form>
+
     </div>
   </div>
 </div>

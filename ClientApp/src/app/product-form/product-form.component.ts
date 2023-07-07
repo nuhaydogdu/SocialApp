@@ -13,11 +13,7 @@ export class ProductFormComponent {
 
   addProduct(name: string, price: string, isactive:boolean)
   {
-console.log(name);
-console.log(price);
-console.log(isactive);
-
-const p = new Product(this.productService.getProducts().length+1,name,Number.parseInt(price),isactive);
-this.productService.addProduct(p);
+    const p = new Product(0,name,Number.parseInt(price),isactive);
+    this.productService.saveProduct(p);
   }
 }
