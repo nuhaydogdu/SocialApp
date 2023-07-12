@@ -87,3 +87,13 @@ PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate service product (ng g
 hangi contructor.ts te kullanacaksam o sınıfın constructeriene (constructor(private productService: ProductService){}) ekleyince kendisi direkt dahil ediyor
 
 15)servisi kullanarak işlemleri yapmak istediğimizde HttpClientModule yi ilk olarak app.module içerisine ekleyip import ettik.
+daha sonra product.services'tek, getProducts() içerisinde kullandım. Son Olarakta product.component içerisinde çağırıp kullandım.
+
+16)CORS Desteğinin Web Api Projesine Eklenmesi (tarayıcıda iki farklı url'e aynı proje içerisinden istekte bulunduğumuzda tarayıcı responsun içerisindeki header bilgisinde tanımlanması gerekenleri istiyor.)
+startup.cs içerisinde ConfigureServices methodu altına (services.AddCors) Ekledik.
+stratup.cs içerisinde configure methodunda app.UseRouting üstte kalacak şekilde  app.UseCors();'i ekledim 
+
+
+
+
+

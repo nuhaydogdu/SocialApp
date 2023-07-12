@@ -25,10 +25,21 @@ namespace ServerApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        readonly string MyAllowOrigins="_myAllowOrigins";
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SocialContext>(x=>x.UseSqlite("Data Source=social.db"));
             services.AddControllers();
+            services.AddCors(options=> {
+                options.AddPolicy(
+                    name:MyAllowOrigins,
+                    builder=>{
+                        builder
+                               .WithOrigins("http://localhost:4200")
+                               .WithMethods("GET"); 
+
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +53,8 @@ namespace ServerApp
             // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowOrigins);
 
             app.UseAuthorization();
 

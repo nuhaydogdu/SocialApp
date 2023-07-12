@@ -17,6 +17,8 @@ export class ProductService {
   constructor(private http: HttpClient) { }
   //http'yi kullanabilmek için projeye import ettik ancak inject işlemiyle bir nesne üretiyor olmamız gerekiyor
 
+
+
   getProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(this.baseUrl + 'api/products')
     // this.http.get(this.baseUrl+ 'api/products').subscribe();
@@ -29,14 +31,14 @@ export class ProductService {
   }
 
   getproductById(id: number){
-    return this.model.products.find(i=>i.id==id);
+    return this.model.products.find(i=>i.productId==id);
   }
 
   saveProduct(product: Product) {
-    if (product.id === 0) {
+    if (product.productId === 0) {
       this.model.products.push(product);
     } else {
-      const p = this.getproductById(product.id);
+      const p = this.getproductById(product.productId);
       if (p) {
         p.name = product.name;
         p.price = product.price;
