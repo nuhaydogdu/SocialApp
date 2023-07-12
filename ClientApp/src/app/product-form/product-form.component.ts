@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../Model';
 
@@ -9,11 +9,18 @@ import { Product } from '../Model';
 })
 export class ProductFormComponent {
 
-  constructor(private productService: ProductService){}
+  @Input() products: Product[];
+
+  constructor(private productService: ProductService){
+    this.products=[];
+  }
 
   addProduct(name: string, price: string, isactive:boolean)
   {
     const p = new Product(0,name,Number.parseInt(price),isactive);
-    this.productService.saveProduct(p);
+    this.productService.addProduct(p)
+                                   .subscribe(product=>{
+                                    this.products.push(product);
+                                   });
   }
 }

@@ -36,8 +36,8 @@ namespace ServerApp
                     builder=>{
                         builder
                                .WithOrigins("http://localhost:4200")
-                               .WithMethods("GET"); 
-
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
                     });
             });
         }

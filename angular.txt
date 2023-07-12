@@ -93,6 +93,9 @@ daha sonra product.services'tek, getProducts() içerisinde kullandım. Son Olara
 startup.cs içerisinde ConfigureServices methodu altına (services.AddCors) Ekledik.
 stratup.cs içerisinde configure methodunda app.UseRouting üstte kalacak şekilde  app.UseCors();'i ekledim 
 
+17)form üzeirnden gelen json(string) formundaki bir bilgiyi server tarafında beklenen decimale çevirmemiz gerektiğinde bunun için ekstra bir paket kullanaibliyoruz(microsoft.aspnetcore.mvc.newtonsoftjson tarayıcıda ara).
+serverApp altındaki ServerApp.csproj içerisine eklendiğini görebiliriz.
+son olarak startup.cs içerisinde AddControllers' in devamına eklyoruz.(services.AddControllers().AddNewtonsoftJson();)
 
 
 

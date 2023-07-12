@@ -30,6 +30,11 @@ export class ProductService {
     //return this.http.get<Product[]>(this.baseUrl + 'api/products') bu işlem sonucunda bize dönecek olan absorvable listesi üzerinden subscribe()  methodunu kolaylıkla kullanabiliyoruz.
   }
 
+  addProduct(product: Product): Observable<Product>
+  {
+    return this.http.post<Product>(this.baseUrl + 'api/products', product);
+  }
+
   getproductById(id: number){
     return this.model.products.find(i=>i.productId==id);
   }
