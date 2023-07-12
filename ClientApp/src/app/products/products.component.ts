@@ -36,6 +36,9 @@ export class ProductsComponent{
   }
 
   deleteProduct(product: Product){
-  this.productService.deleteProduct(product);
+  this.productService.deleteProduct(product).subscribe(p=>{
+    this.products.splice(this.products.findIndex(p=>p.productId == product.productId),1)
+    //buradaki index numaralı elemandan itibaren bir elamanı sil yerine bir eleman koyma(güncelleme işleminde koyması için ayrı bi rveri gönderdik)
+  });
   }
 }

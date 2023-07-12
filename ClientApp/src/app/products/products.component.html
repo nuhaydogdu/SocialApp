@@ -27,8 +27,9 @@
     </div>
     <div class="col-md-5">
 
-      <product-details [product]="selectedProduct"></product-details>
+      <product-details [product]="selectedProduct" [products]="products"></product-details>
       <!-- burda product-details'e parametre olarak gönderiyoruz ve product-details.ts içerisinde karşılıyoruz. -->
+      <!-- products lidtesi üzerine güncelleme işlemimizi yapabilmek için bu sayfaya gelen products listesinin bir referansını product-details sayfasına gönderiyoruz. -->
 
       <hr class="my-3">
 

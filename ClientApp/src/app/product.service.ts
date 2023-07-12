@@ -35,9 +35,23 @@ export class ProductService {
     return this.http.post<Product>(this.baseUrl + 'api/products', product);
   }
 
+  updateProduct(product: Product)
+  {
+    return this.http.put<Product>(this.baseUrl+ 'api/products/' + product.productId, product);
+    //gücellemek istediğimiz ürün id blgisi ve güncellenecek olan bilgileri gönderiyoruz
+  }
+
+  deleteProduct(product: Product): Observable<Product>{ //sildiğimiz product bilgisini geriye döndüreceğiz(: Observable<Product>) ki products listesi içerisinden silelim.
+    return this.http.delete<Product>(this.baseUrl + 'api/products/' + product.productId);
+    // this.model.products= this.model.products.filter(p=>p!==product);
+    //tüm products listesini dolaşıyor product' e eşit olmayanları tekrar ekliyor eşit olanı çıkarıyor böyle bir filtreleme.
+   }
+
+
   getproductById(id: number){
     return this.model.products.find(i=>i.productId==id);
   }
+
 
   saveProduct(product: Product) {
     if (product.productId === 0) {
@@ -50,11 +64,6 @@ export class ProductService {
         p.isActive = product.isActive;
       }
     }
-  }
-
-  deleteProduct(product: Product){
-   this.model.products= this.model.products.filter(p=>p!==product);
-   //tüm products listesini dolaşıyor product' e eşit olmayanları tekrar ekliyor eşit olanı çıkarıyor böyle bir filtreleme.
   }
 
 }
