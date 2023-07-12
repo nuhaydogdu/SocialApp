@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ServerApp.Data;
+using ServerApp.Models;
 
 namespace ServerApp
 {
@@ -29,6 +31,24 @@ namespace ServerApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SocialContext>(x=>x.UseSqlite("Data Source=social.db"));
+            services.AddIdentity<User,Role>().AddEntityFrameworkStores<SocialContext>(); //projeye ıdentity ekledikten sonra bunu eledik, bu şekilde aktif ediyoruz.
+            services.Configure<IdentityOptions>(options=>{                               //projeye ıdentity ekledikten sonra bunu eledik, bu şekilde aktif ediyoruz.
+               
+                options.Password.RequireLowercase=true;
+                options.Password.RequireUppercase=true;
+                options.Password.RequireDigit=true;
+                options.Password.RequireNonAlphanumeric=true;
+                options.Password.RequiredLength=6;
+
+                options.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts=5;
+                options.Lockout.AllowedForNewUsers=true;
+
+                // options.User.AllowedUserNameCharacters=""; parola içerisnde olabilecek karakterleri burada belirtebiliyoruz.
+                options.User.RequireUniqueEmail=true;
+
+                
+            });
             services.AddControllers();
             services.AddCors(options=> {
                 options.AddPolicy(
@@ -55,6 +75,8 @@ namespace ServerApp
             app.UseRouting();
 
             app.UseCors(MyAllowOrigins);
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
