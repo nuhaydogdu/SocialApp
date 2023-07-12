@@ -10,18 +10,25 @@ import { Product } from '../Model';
 export class ProductsComponent{
 
   selectedProduct: Product | null; //buradki seçmiş olduğumuz Product bilgisini başka bir componente imput olarak göndermemiz gerekiyor.
+  products: Product[];
+
 
   constructor(private productService: ProductService) {
     this.selectedProduct = null;
+    this.products = [];
   }
 
   //constructerden hemen sonra çalışan method (constructorda servis çağırımı yapılıyor sonra bu çalıştırılıyor)
   ngOnInit():void{
+    this.getProducts(); //yukarıdaki products listesinin dolmasını sağlıyor
   }
 
 
-  getProducts():Product[]{
-    return this.productService.getProducts();
+  getProducts(){
+    this.productService.getProducts().subscribe(products =>
+      {
+        this.products=products;
+      });
   }
 
   onSelectedProduct(product: Product){

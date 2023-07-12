@@ -85,3 +85,5 @@ eklediğimiz navbarComponent'te appModule'nin bir parçası olacaktır(AppModule
 14)service dosyası oluşturmak için 
 PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate service product (ng g s product)
 hangi contructor.ts te kullanacaksam o sınıfın constructeriene (constructor(private productService: ProductService){}) ekleyince kendisi direkt dahil ediyor
+
+15)servisi kullanarak işlemleri yapmak istediğimizde HttpClientModule yi ilk olarak app.module içerisine ekleyip import ettik.

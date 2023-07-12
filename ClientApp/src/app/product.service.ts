@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Model, Product } from './Model';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,20 @@ export class ProductService {
   // ProductService'yi istediğimiz component içerisine inject edebiliyoruz
   model =new Model();
 
-  constructor() { }
+  baseUrl: string ="http://localhost:5000/";
 
-  getProducts(){
-    return this.model.products;
+  constructor(private http: HttpClient) { }
+  //http'yi kullanabilmek için projeye import ettik ancak inject işlemiyle bir nesne üretiyor olmamız gerekiyor
+
+  getProducts(): Observable<Product[]>{
+    return this.http.get<Product[]>(this.baseUrl + 'api/products')
+    // this.http.get(this.baseUrl+ 'api/products').subscribe();
+    //(this.http.get(this.baseUrl+ 'api/products') bu strimi akışı başlatıyoruz ama bize ne zaman bir cevap geleceğini bilmiyoruz.
+    //cevap geldeden bu cevabı bekleme listesine girmemiz gerekiyor subscribe() bu işe yarıyor
+    //--------------------------
+    //bu şekilde başlamış bir strimi ele almak için angularda rxjs(riaktifjs)kütüphanesi kullanılıyor.
+    //ve rxjs kütüphanesi içerisinde absorvable listesi var.
+    //return this.http.get<Product[]>(this.baseUrl + 'api/products') bu işlem sonucunda bize dönecek olan absorvable listesi üzerinden subscribe()  methodunu kolaylıkla kullanabiliyoruz.
   }
 
   getproductById(id: number){
@@ -22,7 +34,6 @@ export class ProductService {
 
   saveProduct(product: Product) {
     if (product.id === 0) {
-      product.id=this.getProducts().length+1;
       this.model.products.push(product);
     } else {
       const p = this.getproductById(product.id);
