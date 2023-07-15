@@ -94,7 +94,7 @@ namespace ServerApp.Controllers
             try{
                 await _context.SaveChangesAsync();
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 return NotFound();
             }

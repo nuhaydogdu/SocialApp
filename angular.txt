@@ -101,3 +101,16 @@ son olarak startup.cs içerisinde AddControllers' in devamına eklyoruz.(service
 18)IdentityDbContext'i kullanmak istediğim zaman ekstra bir paketi projeme eklemem gerekiyor(Microsoft.AspNetCore.Identity.EntityFrameworkCore)
 SocialContext sınıfım içerisnde gerekli ayarlamaları yaprım sonra birde stratup.cs içerisinde yapılması gerekenler var.
 son olarak startup.cs içerisindeki Configure methodu içerisine app.UseAuthentication(); eklemek gerekiyor ama mutlaka app.UseAuthorization();'den yukarda olacak
+
+19)login ve register işlemlerini yaparken sıra token oluşturmaya geliyor
+(login işlemide girilen username-mail ve password bilgisini kullanarak token oluşturup kullanıcının diğer giriş çıkış işlemlerinde bunu kontrol ediyoruz!!!)
+ilhili site: JSON Web Token (jwt) (oluşturulan token içeriğini görüntüleyebiliyoruz)
+System.IdentityModel.Tokens.Jwt ve Microsoft.AspNetCore.Authentication.JwtBearer bunlarıda sırasıyla ekleyebiliyoruz projeye
+NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet Package Manager yaz. açılan kısımdan jwt diye arama yapıp gelen kısımdan üstteki adlara sahip eklentileri ekledik
+
+20) yukarıdaki ekleme işlemlerini yaptıktan sonra UserController içerisinde GenerateToken Methodumu oluşturdum işlemlerimi yapabilmek için appsetting.json dosyası içerisine bazı tanımlamalar yapmama gerekiyor.
+  "AppSettings":{
+    "Sevret": "..."
+  },
+  appsetting.json içerisindeki eklediğimiz secret bilgisne ulaşmak için startup dosyası içerisindeki Configuration objesini kullanabiliriz.
+  bunun için UserController içerisinde injection İşlemi yaptık. 

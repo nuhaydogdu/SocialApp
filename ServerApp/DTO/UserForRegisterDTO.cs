@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ServerApp.DTO
 {
-    public class UserDTO
+    public class UserForRegisterDTO
     {
         public string Name {get; set;}
         public string UserName {get; set;}
