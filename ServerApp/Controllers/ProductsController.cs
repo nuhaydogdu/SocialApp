@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerApp.Data;
@@ -10,6 +11,7 @@ using ServerApp.Models;
 
 namespace ServerApp.Controllers
 {
+    [Authorize]
     //localhost:5000/api/products
     [ApiController]
     [Route("api/[controller]")]
@@ -40,6 +42,7 @@ namespace ServerApp.Controllers
         // _products.Add(new Product(){ProductId=5, Name="Samsung s5", price=5000, isActive=false});
         }
 
+        [AllowAnonymous]
         //localhost:5000/api/products
         [HttpGet]
         public async Task<IActionResult> GetProducts(){

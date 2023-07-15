@@ -114,3 +114,7 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
   },
   appsetting.json içerisindeki eklediğimiz secret bilgisne ulaşmak için startup dosyası içerisindeki Configuration objesini kullanabiliriz.
   bunun için UserController içerisinde injection İşlemi yaptık. 
+
+  21)Oluşturulan token bilgisini validate etmek için startup.cs içerisinde bir yapı kurduk  //Oluşturduğumuz token bilgisini validate etmek için
+  bu işlemler sonrasında controller düzeyinde outhentication uyguladık 
+  postmandan istekte bulunurken header kısmına key:Aouthorization value:Bearer token(bearer bir boşluk ve tokeni yazarak istekte bulunuluyor)
