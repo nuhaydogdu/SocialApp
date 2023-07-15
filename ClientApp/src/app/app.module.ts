@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProductsComponent } from './products/products.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule //Angular projesi içerisinde diğer modüleri kullanmak stediğimde buraya import etmek gerekiyor.
+    HttpClientModule, //(Http requesti gönderebilmek için HttpClientModule'yi eklemek gerekiyor) Angular projesi içerisinde diğer modüleri kullanmak stediğimde buraya import etmek gerekiyor.
+    FormsModule       //bizim ng modeli formlarda kullanabilmek için mutlaka ilgili componentin dahil olduğu module içerisine bunu eklemeliyiz
   ],
   providers: [],
   bootstrap: [AppComponent]  //tanımlanan başlangıç componenti(AppModule'yi çağırdığımız zaman AppComponent çalıştırılacak )

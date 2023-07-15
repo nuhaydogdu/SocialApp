@@ -118,3 +118,6 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
   21)Oluşturulan token bilgisini validate etmek için startup.cs içerisinde bir yapı kurduk  //Oluşturduğumuz token bilgisini validate etmek için
   bu işlemler sonrasında controller düzeyinde outhentication uyguladık 
   postmandan istekte bulunurken header kısmına key:Aouthorization value:Bearer token(bearer bir boşluk ve tokeni yazarak istekte bulunuluyor)
+
+  22)FormsModule(app.module.ts) //bizim ng modeli formlarda kullanabilmek için mutlaka ilgili componentin dahil olduğu module içerisine bunu eklemeliyiz
+  navbar.component.html <!-- [disabled]="form.invalid" buradaki form  #form="ngForm"  buradan geliyor(ngForm içerisinde ngModuller mulunuyor örnek: -{{username.dirty}} valid invalid, touched dirty)  ve bu klasslar dinamik olarak ekleniyor!!-->
