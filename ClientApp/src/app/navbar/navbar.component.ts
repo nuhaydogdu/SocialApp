@@ -15,11 +15,23 @@ export class NavbarComponent {
 
 
   login(){
-    this.authService.login(this.model).subscribe(next => {
-      console.log("login başarılı");
-    },error => {
-      console.log("login hatalı");
-    }
-    )}
+        //auth.service içerisinde yazmış olduğumuz sorguyu componenet içerisindinde subscribe methodu yardımıyla daha önce hazırlamış olduğumuz yapıyı çalıştırmış oluyoruz.
+        this.authService.login(this.model).subscribe(next => {
+            console.log("login başarılı");
+          },error => {
+            console.log("login hatalı");
+          })
+  }
+
+
+  loggedIn(){
+    const token = localStorage.getItem("token");
+    return token?true:false;
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    console.log("logout");
+  }
 
 }

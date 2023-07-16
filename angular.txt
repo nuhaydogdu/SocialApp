@@ -120,4 +120,7 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
   postmandan istekte bulunurken header kısmına key:Aouthorization value:Bearer token(bearer bir boşluk ve tokeni yazarak istekte bulunuluyor)
 
   22)FormsModule(app.module.ts) //bizim ng modeli formlarda kullanabilmek için mutlaka ilgili componentin dahil olduğu module içerisine bunu eklemeliyiz
-  navbar.component.html <!-- [disabled]="form.invalid" buradaki form  #form="ngForm"  buradan geliyor(ngForm içerisinde ngModuller mulunuyor örnek: -{{username.dirty}} valid invalid, touched dirty)  ve bu klasslar dinamik olarak ekleniyor!!-->
+  navbar.component.html <!-- [disabled]="form.invalid" buradaki form  #form="ngForm"  buradan geliyor(ngForm içerisinde ngModuller mulunuyor örnek: -{{username.dirty}} valid invalid, touched dirty)  ve bu classlar dinamik olarak ekleniyor incele penceresinden bunu görebiliyourm!!-->
+
+  23)PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng g s _services/auth (login işlemleri için yeni bir servis sınıfı oluşturdum)
+  auth.service ve navbar.component içerisinde bazı service çağırımlarını yaptık kullanımları kod üzerinde detaylıca gösterildi (rxjs kütüphanesinin kullanımı angular için oldukça önemli!!)

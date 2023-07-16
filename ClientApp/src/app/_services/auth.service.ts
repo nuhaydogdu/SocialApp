@@ -12,6 +12,8 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(model: any){
+    //alttaki satırda model bize form üzerinden girilen değerler bunu servisimize gönderiyoruz
+    // pipe iki işlemi birbirine bağlıyor ilk aşamayı this.http.post(this.baseUrl+'login', model)' yi çalıştırıyor gelen cevabı bekliyor ve ikinci aşamada gelen resposeyi anlaiz ediyor
     return this.http.post(this.baseUrl+'login', model).pipe(
       map((response: any) =>{
         const result = response;
@@ -20,6 +22,10 @@ export class AuthService {
         }
       })
     )
+  }
+
+  register(model: any){
+    return this.http.post(this.baseUrl+ 'register',model);
   }
 
 }
