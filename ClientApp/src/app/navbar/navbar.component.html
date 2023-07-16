@@ -21,7 +21,7 @@
 
       <ul *ngIf="loggedIn()" class="navbar-nav ms-auto">
         <li class="navbar-nav">
-          <a href="" class="nav-link ">UserName</a>
+          <a href="" class="nav-link ">{{authService.decodedToken.unique_name}}</a>
         </li>
         <li class="navbar-nav">
           <a (click)="logout()" class="nav-link ">LogOut</a>

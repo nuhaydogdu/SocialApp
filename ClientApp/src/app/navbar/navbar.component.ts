@@ -12,7 +12,7 @@ export class NavbarComponent {
   model: any = {}; //formdan gönderilen her türlü şeyi karşılayabilmek için böyle bir değişken tanımladık (any)
 
 
-  constructor(private authService: AuthService, private router: Router) {} //burada bir inject işlemi yapıyoruz
+  constructor(public authService: AuthService, private router: Router) {} //burada bir inject işlemi yapıyoruz
 
 
   login(){
@@ -27,8 +27,7 @@ export class NavbarComponent {
 
 
   loggedIn(){
-    const token = localStorage.getItem("token");
-    return token?true:false;
+    return this.authService.loggedIn();
   }
 
   logout(){

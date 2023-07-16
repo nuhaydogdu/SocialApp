@@ -136,3 +136,7 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
   daha sonra route.ts içerisinde canActivate bilgisini ekledik.
   auth-guard dosyamız içerisnde yazdığımız canActivate'den bize true değeri döndüğü sürece ilgili route'lere gidebiliyoruz.
   bunu auth.service üzerinden kontrol etmek için loggedIn methodunu yazdık daha sonra auth-guard içerisinde servis  inject işlemini yaptık
+
+  26)token bilgisinin kullanılması decode edilmesi (bunun için ekstra kütüphaneler ekliyoruz)
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install @auth0/angular-jwt
+  auth.service.ts içerisinde import gedip gerekli decode işlemlerini yapıyoruz
