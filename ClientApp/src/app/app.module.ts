@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { appRoutes } from './routes';
+import { AuthGuard } from './_guards/auth-guard';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { appRoutes } from './routes';
     FormsModule ,      //bizim ng modeli formlarda kullanabilmek için mutlaka ilgili componentin dahil olduğu module içerisine bunu eklemeliyiz
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]  //tanımlanan başlangıç componenti(AppModule'yi çağırdığımız zaman AppComponent çalıştırılacak )
 })
 export class AppModule { }

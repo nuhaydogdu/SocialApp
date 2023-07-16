@@ -128,4 +128,11 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
   --------------------------------------------------
   24)routing işlemleri için route.ts adında yeni bir dosya oluşturduk.
   route.ts içerisnde linklerimizi belirledikten sonra route.ts'i app.module içerisinde tanımlamamız gerekiyor.(import içerisinde RouterModule)
-  daha sonra çağırılan linkin ilgili html çalıştırılması için app.component içerisinde bir yertutucu tanımladık8router-outlet
+  daha sonra çağırılan linkin ilgili html çalıştırılması için app.component içerisinde bir yertutucu tanımladık router-outlet
+
+  25)Guards
+  kullanıcı uygulamaya giriş yaptıysa login işlemi yaptıysa bu durumda kullanıcının bazı linkleri görebiliyot olması gerekiyor(kullanıcının gidebileceği alanların kısıtlamasını yapmak için bir guard ekemek gerekiyor)
+  oluşturmuş oludğumuz AuthGuard'dı ilgili module içerisine ekliyor olmamız gerekiyor.(app.module içerisinde provider:[] kısmına ekledik)
+  daha sonra route.ts içerisinde canActivate bilgisini ekledik.
+  auth-guard dosyamız içerisnde yazdığımız canActivate'den bize true değeri döndüğü sürece ilgili route'lere gidebiliyoruz.
+  bunu auth.service üzerinden kontrol etmek için loggedIn methodunu yazdık daha sonra auth-guard içerisinde servis  inject işlemini yaptık

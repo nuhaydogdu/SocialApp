@@ -7,15 +7,15 @@
     </button>
     <!-- Buradaki butona tıkladığımızda ilgili div buloğu kullanıcıya gösterilecek -->
     <div class="collapse navbar-collapse" id="navbarToggler">
-      <ul class="navbar-nav me-auto">
-        <li [routerLink]="['/members']" routerLinkActive="active"  class="navbar-nav">
-          <a  href="" class="nav-link ">Members</a>
+      <ul *ngIf="loggedIn()" class="navbar-nav me-auto">
+        <li class="navbar-nav" routerLinkActive="active">
+          <a [routerLink]="['/members']" class="nav-link">Members</a>
         </li>
-        <li [routerLink]="['/friends']" routerLinkActive="active"  class="navbar-nav">
-          <a  href="" class="nav-link ">Friends</a>
+        <li class="navbar-nav" routerLinkActive="active">
+          <a [routerLink]="['/friends']" class="nav-link">Friends</a>
         </li>
-        <li [routerLink]="['/messages']" routerLinkActive="active"  class="navbar-nav">
-          <a  href="" class="nav-link ">Messages</a>
+        <li class="navbar-nav" routerLinkActive="active">
+          <a [routerLink]="['/messages']" class="nav-link">Messages</a>
         </li>
       </ul>
 
@@ -28,7 +28,7 @@
         </li>
       </ul>
 
-      <form *ngIf="!loggedIn()" #form="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" >
+      <form *ngIf="!loggedIn()" #form="ngForm" class="form-inline mt-2 mt-md-0 ms-auto" (ngSubmit)="login()" >
         <input #username="ngModel" class="form-control form-control-sm mr-sm-2" required minlength="5" type="text" name="username" placeholder="Username" [(ngModel)]="model.username">
         <input #password="ngModel" class="form-control form-control-sm mr-sm-2" required minlength="6" type="password" name="password" placeholder="Password" [(ngModel)]="model.password">
         <button [disabled]="form.invalid" class="btn btn-success btn-sm my-2 my-sm-0" type="submit">Login</button>

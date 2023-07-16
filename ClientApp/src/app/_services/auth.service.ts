@@ -28,4 +28,8 @@ export class AuthService {
     return this.http.post(this.baseUrl+ 'register',model);
   }
 
+  loggedIn(){
+    const token = localStorage.getItem("token");
+    return token?true:false; //token varsa true yoksa false döndürüyor
+  }
 }
