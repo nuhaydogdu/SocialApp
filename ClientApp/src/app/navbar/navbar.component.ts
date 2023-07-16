@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -11,13 +12,14 @@ export class NavbarComponent {
   model: any = {}; //formdan gönderilen her türlü şeyi karşılayabilmek için böyle bir değişken tanımladık (any)
 
 
-  constructor(private authService: AuthService) {} //burada bir inject işlemi yapıyoruz
+  constructor(private authService: AuthService, private router: Router) {} //burada bir inject işlemi yapıyoruz
 
 
   login(){
         //auth.service içerisinde yazmış olduğumuz sorguyu componenet içerisindinde subscribe methodu yardımıyla daha önce hazırlamış olduğumuz yapıyı çalıştırmış oluyoruz.
         this.authService.login(this.model).subscribe(next => {
             console.log("login başarılı");
+            this.router.navigate(['/members'])  //yukarıda router'i injection ettikten sonra burada böyle kullanbiliyoruz yönlendirmeler için
           },error => {
             console.log("login hatalı");
           })
@@ -32,6 +34,7 @@ export class NavbarComponent {
   logout(){
     localStorage.removeItem("token");
     console.log("logout");
+    this.router.navigate(['/home'])
   }
 
 }

@@ -1,21 +1,21 @@
 <!-- large cihazlarda masaüstü görüntüsünde daha alt cihazlarda mobil görüntüsünde -->
-<div class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<div class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a href="" class="navbar-brand">Social App</a>
+    <a [routerLink]="['/home']" class="navbar-brand">Social App</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggler">
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Buradaki butona tıkladığımızda ilgili div buloğu kullanıcıya gösterilecek -->
     <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav me-auto">
-        <li class="navbar-nav">
-          <a href="" class="nav-link active">Home</a>
+        <li [routerLink]="['/members']" routerLinkActive="active"  class="navbar-nav">
+          <a  href="" class="nav-link ">Members</a>
         </li>
-        <li class="navbar-nav">
-          <a href="" class="nav-link ">Users</a>
+        <li [routerLink]="['/friends']" routerLinkActive="active"  class="navbar-nav">
+          <a  href="" class="nav-link ">Friends</a>
         </li>
-        <li class="navbar-nav">
-          <a href="" class="nav-link ">Messge</a>
+        <li [routerLink]="['/messages']" routerLinkActive="active"  class="navbar-nav">
+          <a  href="" class="nav-link ">Messages</a>
         </li>
       </ul>
 

@@ -124,3 +124,8 @@ NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet P
 
   23)PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng g s _services/auth (login işlemleri için yeni bir servis sınıfı oluşturdum)
   auth.service ve navbar.component içerisinde bazı service çağırımlarını yaptık kullanımları kod üzerinde detaylıca gösterildi (rxjs kütüphanesinin kullanımı angular için oldukça önemli!!)
+
+  --------------------------------------------------
+  24)routing işlemleri için route.ts adında yeni bir dosya oluşturduk.
+  route.ts içerisnde linklerimizi belirledikten sonra route.ts'i app.module içerisinde tanımlamamız gerekiyor.(import içerisinde RouterModule)
+  daha sonra çağırılan linkin ilgili html çalıştırılması için app.component içerisinde bir yertutucu tanımladık8router-outlet
