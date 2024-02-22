@@ -1,0 +1,44 @@
+<div calass="container" style="margin-top: 100px">
+  <div class="row">
+    <div class="col-md-7">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <!-- burada isActive değerinin false olmasına göre tr tagına .bg-secondary clasını ekle yağıyoruz(ilgili satırların zeminlerinin gri olması gerekiyor) -->
+          <tr *ngFor="let p of products" [class.bg-secondary]="p.isActive==false">
+            <td>{{p.productId}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.price}}</td>
+            <td>
+               <button class="btn btn-primary" (click)="onSelectedProduct(p)"> Edit</button>
+               <button class="btn btn-danger" (click)="deleteProduct(p)"> Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-5">
+
+      <product-details [product]="selectedProduct" [products]="products"></product-details>
+      <!-- burda product-details'e parametre olarak gönderiyoruz ve product-details.ts içerisinde karşılıyoruz. -->
+      <!-- products lidtesi üzerine güncelleme işlemimizi yapabilmek için bu sayfaya gelen products listesinin bir referansını product-details sayfasına gönderiyoruz. -->
+
+      <hr class="my-3">
+
+      <product-form [products]="products"></product-form>
+      <!-- product.component.ts sayfasından bu sayfaya gelen product listesini product-form.componente referans olarak gönderiyoruz -->
+
+    </div>
+  </div>
+</div>
+
+
+

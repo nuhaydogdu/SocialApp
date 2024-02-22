@@ -1,0 +1,40 @@
+<div class="container mt-3">
+
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFollows" id="radioFollowers" value="followers"
+              [(ngModel)]="followParams" (change)="getUsers()">
+            <label class="form-check-label" for="inlineRadio1">Followers</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radioFollows" id="radioFollowings" value="followings"
+              [(ngModel)]="followParams" (change)="getUsers()">
+            <label class="form-check-label" for="inlineRadio2">Followings</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div style="margin: 5px;" *ngFor="let user of users" class="col-lg-3 col-md-4 col-sm-6 col-12">
+      <div class="card">
+        <div class="profile-picture">
+          <img src="{{user.imageUrl || '../../../../../assets/user.png'}}" alt="">
+        </div>
+        <h3>{{user.name}}, <small>{{user.age}}</small></h3>
+        <h4 style="height: 20px;">{{user.country}}, {{user.city}}</h4>
+        <button class="btn btn-outline-primary btn-sm">
+          <i class="fas fa-plus"></i>
+          Arkadaş ekle
+        </button>
+        <a [routerLink]="['/members/', user.id]" class="view-more">View Profile</a>
+      </div>
+    </div>
+  </div>
+</div>

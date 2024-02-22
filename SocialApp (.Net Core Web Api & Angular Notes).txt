@@ -1,0 +1,389 @@
+  C:\Users\nuhay>dotnet --version
+  C:\Users\nuhay>node --version                                  -> node.js kurulumu değil mi onun kontrolünü yapıyoruz
+  C:\Users\nuhay>npm --version                                   -> @angular/cli'yı yükeyebilmek için node.js'yi yüklemiş olmamız gerekiyor (npm node.js'in kendi cli'ı, npm üzerinden node.js'e ulaşıp ona talimatlar verebiliyoruz)
+  C:\Users\nuhay>npm install -g @angular/cli                     -> -g(global) sadece kodun çalıştırıldığı dizinde değil de hangi dizinde olursak olalım @angular/cli(ng) erişilebilir olacaktır ((ng= angular cli) bizim angular için asistanımız)
+  C:\Users\nuhay>npm list -g @angular/cli --depth=0
+  vsCode-> extensions  .NET Core Extension Pack  
+  son olarak sql işlemleri için SQLLite indirdim. 
+
+  Projeden hariç Özel bilgi:
+  ORM dediğimiz entity framework yapısını kullanacağımız zaman, bir bilgisayarda entityFramework'ün toollarını kullanabilmek için(enitityfarmework bizlere işimizi kolaylaştırabilmek için veritabanıyla
+  entegrasyonu hızlı bir şekilde yapabilmek için belirli toollar araçlar sağlamakta) entityFramework toollarını bilgisayarımıza install etmemiz gerekiyor!!
+  Bunun için internette ef core install yazınca ->dotnet tool install --global dotnet-ef (cmd)
+
+  ----------------ANGULAR(ClientApp)--------------------------------
+
+  ANGULAR PROJESİ OLUŞTURMAK İÇİN CMD VEYA TERMİNALDEN
+  ilk olarak -> (C:\Users\nuhay>ng version) ile version mevcutmu konntrolü yapıyorum
+  eğer yoksa -> path olarak eklemem gerekiyor (C:\Users\nuhay\AppData\Roaming\npm)
+  var olduğundan emin olduktan sonra -> 
+  C:\Users\nuhay\Desktop>ng new SocialApp --directory SocialApp/ClientApp 
+  --routing true --style css --skip-tests true --skip-git true 
+
+  1) package.json dosyası içerisindeki "scripts"{} içerisine "start": "ng start", ekleyerek. 
+  Terminalden npm start dediğimde angular projemin çalışmasını sağlıyorum.
+
+  ----------------WEB.APİ(ServerApp)--------------------------------
+
+  2)PS C:\Users\nuhay\Desktop\SocialApp> mkdir ServerApp 
+  mkdir ile ilgili dosya yolu altına vereceğimiz isimde(ServerApp) yeni bir klasör oluşturuyor.
+
+  3)PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet new globaljson --sdk-version 3.1.101
+  buradaki komut ile ServerApp kısmında globaljson dosyası oluşturup, içerisine handi dotnet versiyonunu kullanacağımızı söylüyoruz.
+
+  4)PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet new webapi
+  (PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet -h(--help komutu dökümantasyonabakmak için)) 
+  Bunun sayesinde ServerApp altına bir webapi projesi oluşturuluyor.
+
+  5)view-> Command palette(ctrl+shift+p) burada 
+  .NET:Generate Assets for Build and Debug 
+  seçeneğini seçerek .vscode uzantılı klasörün oluşmasını sağlıyoruz bu bize bazı faydalar sağlıyor.
+  launchSettings.json içerisinde "applicationUrl"'i düzenledik, Startup.cs içerisinde  // app.UseHttpsRedirection(); yorum satırına aldık.
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet run
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet watch run  (çalışırken yapılan değişikliklerde anında işleniyor.)
+
+  6)ApiController işlemleri yaptık (Http Requests)
+
+  7)Entity Framework Core'u projeme dahil edeceğim (hangi veritabanı sağlayıcısını kullanacaksak o veritabanı sağlayıcısının döküanını projeye ekliyor olmam gerekiyor. search=> ef core providers)
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 3.1.4
+  Terminal ekranımdan bu komut ile projeme dahil ettim.
+  Dahil ettikten sonra DataContext: DbContext sınıfımı oluşturuyorum.
+  DataContext sınıfım içerisnde ilgli model sınıflarımın DbSet'lerini tanımlıyorum daha sonra startup.cs içerisinde ConfigureServices içerisine connectionStringimi belirliyorum.
+
+  8)Migration işlemlerimi yapabilmek için 
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet tool (un)install --global dotnet-ef (veri tabanımızı oluşturmak için ekstra komutlara ihtiyacımız var bu komutlarda ekstra bir paket içerisinde)
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialCreate (bunu çalıştırınca design kütüphanesini eklememi istedi o yüzden aşağıdaki işlemi yaptım)
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet add package Microsoft.EntityFrameworkCore.Design --version 3.1.4  (işlem tamamlanınca ServerApp.csproj dosyası içerisinde ilgili kütüphanelerin eklenmiş olması gerekiyor.)
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef migrations add InitialCreate
+  PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef database update
+
+  9)DTO(data transfer objeleri)
+  //Data transfer objeleri DTO
+  //product Modelsınıfındaki içeriği buraya aldım ama istemediklerimi(kullanıcıya görünmesini istemediklerimi) buradan çıkardım 
+  //İlk olarak dto yu bu şekilde yazdık daha sonra ProductController içerisindeki GetProducts içerisnde kullandım
+  //heryerde kullanamk steyeceğim için bunu bir method şekline çevirdim ProductToDto
+
+  ----------------ANGULAR(ClientApp)--------------------------------
+
+  10)Angular9 temel özellikler 
+  package.json node_modules klasöründe bulunan paketlerin isimlerini(meta bilgilerini) tutuyor. Başaka bir yere projemiz taşıdığımız zaman node_modules' ü taşımaya gerek yok.
+  Terminale (npm install) yazdığımızda otomatik olarak package.json dosyasına göre yükleyecek.
+  Uygulamamızın bir başlangıç module'si oluyor ve buşlangıç module'sinin bir başlangıç componenti oluyor.
+  src->app->app.module.ts
+  src->app->app.component.ts
+  Uygulama çalıştığı zaman şu module ile başlaman gerekiyor talimatı kısmını(src-> main.ts)
+
+  11)AppComponent html sayfasına dinamik  bir bilgi göndermek istiyorsam 
+  AppComponenet class tanımlamasının içinde, örneğin servis üzerinden bilgiyi alıp html sayfasına gönderebiliyoruz.
+  Tüm Componenetlere ortak css yazmak istersem angular.json içerisindeki "styles": ["src/styles.css"], tanımlaması sayesinde tüm Componentler için ortak olan css'i src->style.css içerisine yazıyoruz.
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install bootstrap@4.5.0 (bootstrap'i Angular projemize dahil ediyoruz)
+  bootstrap'i projeye ekledikten sonra angular.json dosyası içerisindeki "styles" içerisinde boostrap css dosyasının yolunu belirliyoruz. daha sonrasında index.html içerisindeki body'e class="bg-primary" ekledik
+
+  12)src->app->app.component.ts içerisndeki AppComponent içerisinde verilerimizi alıp html sayfamıza gönderiyoruz.
+  html sayfasında karşılamak için {{}} bu işaret kullanılıyor
+  farklı bir takım kullanımlar var ona app.component.html sayfasından bakabilirim.(<tr *ngFor="let p of getProducts()" [class.bg-secondary]="p.isActive==false">)
+
+  13)Yeni bir component oluşturmak için 
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate component navbar (ng g c navbar ->navbar componenti oluşturmanın kısa yolu)
+  eklediğimiz navbarComponent'te appModule'nin bir parçası olacaktır(AppModule içerisine NAvbar component olarak eklenmiş oluyor)
+
+  14)service dosyası oluşturmak için 
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng generate service product (ng g s product)
+  hangi contructor.ts te kullanacaksam o sınıfın constructeriene (constructor(private productService: ProductService){}) ekleyince kendisi direkt dahil ediyor
+
+  15)servisi kullanarak işlemleri yapmak istediğimizde HttpClientModule yi ilk olarak app.module içerisine ekleyip import ettik.
+  daha sonra product.services'tek, getProducts() içerisinde kullandım. Son Olarakta product.component içerisinde çağırıp kullandım.
+
+  16)CORS Desteğinin Web Api Projesine Eklenmesi (tarayıcıda iki farklı url'e aynı proje içerisinden istekte bulunduğumuzda tarayıcı responsun içerisindeki header bilgisinde tanımlanması gerekenleri istiyor.)
+  startup.cs içerisinde ConfigureServices methodu altına (services.AddCors) Ekledik.
+  stratup.cs içerisinde configure methodunda app.UseRouting üstte kalacak şekilde  app.UseCors();'i ekledim 
+
+  17)form üzeirnden gelen json(string) formundaki bir bilgiyi server tarafında beklenen decimale çevirmemiz gerektiğinde bunun için ekstra bir paket kullanaibliyoruz(microsoft.aspnetcore.mvc.newtonsoftjson tarayıcıda ara).
+  serverApp altındaki ServerApp.csproj içerisine eklendiğini görebiliriz.
+  son olarak startup.cs içerisinde AddControllers' in devamına eklyoruz.(services.AddControllers().AddNewtonsoftJson();)
+
+  --------------------------------ServerApp-------------------------------------
+  18)IdentityDbContext'i kullanmak istediğim zaman ekstra bir paketi projeme eklemem gerekiyor(Microsoft.AspNetCore.Identity.EntityFrameworkCore)
+  SocialContext sınıfım içerisnde gerekli ayarlamaları yaprım sonra birde stratup.cs içerisinde yapılması gerekenler var.
+  son olarak startup.cs içerisindeki Configure methodu içerisine app.UseAuthentication(); eklemek gerekiyor ama mutlaka app.UseAuthorization();'den yukarda olacak
+
+  19)login ve register işlemlerini yaparken sıra token oluşturmaya geliyor
+  (login işlemide girilen username-mail ve password bilgisini kullanarak token oluşturup kullanıcının diğer giriş çıkış işlemlerinde bunu kontrol ediyoruz!!!)
+  ilhili site: JSON Web Token (jwt) (oluşturulan token içeriğini görüntüleyebiliyoruz)
+  System.IdentityModel.Tokens.Jwt ve Microsoft.AspNetCore.Authentication.JwtBearer bunlarıda sırasıyla ekleyebiliyoruz projeye
+  NuGet Package Manager: Add Package'a uşamak için control+shidt+p sonra NuGet Package Manager yaz. açılan kısımdan jwt diye arama yapıp gelen kısımdan üstteki adlara sahip eklentileri ekledik
+
+  20) yukarıdaki ekleme işlemlerini yaptıktan sonra UserController içerisinde GenerateToken Methodumu oluşturdum işlemlerimi yapabilmek için appsetting.json dosyası içerisine bazı tanımlamalar yapmama gerekiyor.
+    "AppSettings":{
+      "Sevret": "..."
+    },
+    appsetting.json içerisindeki eklediğimiz secret bilgisne ulaşmak için startup dosyası içerisindeki Configuration objesini kullanabiliriz.
+    bunun için UserController içerisinde injection İşlemi yaptık. 
+
+  21)Oluşturulan token bilgisini validate etmek için startup.cs içerisinde bir yapı kurduk  //Oluşturduğumuz token bilgisini validate etmek için
+  bu işlemler sonrasında controller düzeyinde outhentication uyguladık 
+  postmandan istekte bulunurken header kısmına key:Aouthorization value:Bearer token(bearer bir boşluk ve tokeni yazarak istekte bulunuluyor)
+
+  22)FormsModule(app.module.ts) //bizim ng modeli formlarda kullanabilmek için mutlaka ilgili componentin dahil olduğu module içerisine bunu eklemeliyiz
+  navbar.component.html <!-- [disabled]="form.invalid" buradaki form  #form="ngForm"  buradan geliyor(ngForm içerisinde ngModuller mulunuyor örnek: -{{username.dirty}} valid invalid, touched dirty)  ve bu classlar dinamik olarak ekleniyor incele penceresinden bunu görebiliyourm!!-->
+
+  23)PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> ng g s _services/auth (login işlemleri için yeni bir servis sınıfı oluşturdum)
+  auth.service ve navbar.component içerisinde bazı service çağırımlarını yaptık kullanımları kod üzerinde detaylıca gösterildi (rxjs kütüphanesinin kullanımı angular için oldukça önemli!!)
+
+  --------------------------------------------------
+  24)routing işlemleri için route.ts adında yeni bir dosya oluşturduk.
+  route.ts içerisnde linklerimizi belirledikten sonra route.ts'i app.module içerisinde tanımlamamız gerekiyor.(import içerisinde RouterModule)
+  daha sonra çağırılan linkin ilgili html çalıştırılması için app.component içerisinde bir yertutucu tanımladık router-outlet
+
+  25)Guards
+  kullanıcı uygulamaya giriş yaptıysa login işlemi yaptıysa bu durumda kullanıcının bazı linkleri görebiliyot olması gerekiyor(kullanıcının gidebileceği alanların kısıtlamasını yapmak için bir guard ekemek gerekiyor)
+  oluşturmuş oludğumuz AuthGuard'dı ilgili module içerisine ekliyor olmamız gerekiyor.(app.module içerisinde provider:[] kısmına ekledik)
+  daha sonra route.ts içerisinde canActivate bilgisini ekledik.
+  auth-guard dosyamız içerisnde yazdığımız canActivate'den bize true değeri döndüğü sürece ilgili route'lere gidebiliyoruz.
+  bunu auth.service üzerinden kontrol etmek için loggedIn methodunu yazdık daha sonra auth-guard içerisinde servis  inject işlemini yaptık
+
+  26)token bilgisinin kullanılması decode edilmesi (bunun için ekstra kütüphaneler ekliyoruz)
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install @auth0/angular-jwt
+  auth.service.ts içerisinde import gedip gerekli decode işlemlerini yapıyoruz
+
+  27)Hata Denetiminin Yapılması
+  server kısmında oluşan hataların kullanıcıya gösterilmesini sağlayan yapı startup.cs içerisinde Configure metodunda bulunan app.UseDeveloperExceptionPage();
+  sonra launch.AppSettings.json dosayası na bakıyoruz burada 
+        "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+      tanımı var bu tanım startup.cs de eğer development aşamasındaysa ExceptionPage göster kısmına yardımcı oluyor.
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+  
+  Uygulama yayınlanacağı zaman Develeopment olan kısın Production olarak değiştiriliyor buda herhangi bir istek sırasında hata oluşunca ExceptionPage gelmesini engelliyor(amaö oluşan hanta tüm detaylarıyla gösterilmesinde bizim yönettiğimiz hata mesajları verilsin)
+  
+  28) Oluşan hata mesajlarını uygulamanın içerisinde tek bir yerden (global düzeyde) kontrıl etmek için
+  ErrorDetails sınıfını oluşturup launchsettings kısmınınde environmenti production yaptık ve startup.cs içerisinde IsDevelopment değilde production aşamasındayken neler olacağını yazdık!!!!!!!!!!.
+  
+  29)ModelState Hatalarını kullanımını nasıl yapacağımızıda gördük (tıpkı mvc deki gibi)
+  client tarfından bir requestte bulunuluyor ve response dönüyor biz bu sürecin içerisine middleware ile bu ikisinin arasına kodlarımızı ekleyebiliyoruz(server tarafında bunu yaptık(28)).
+  _services->error.intercaptor.ts'i ekledik (intercaptor kullanmak hata yönetimini ayrı ayrı değil de tek bir yerden yapmamıza yardımcı oluyor)
+
+  30)oluşturduğumuz mesajları kullanıcıya göstermek için Alertify'ı kullandık
+  PS C:\Users\nuhay\Desktop\SocialApp\ClientApp> npm install alertifyjs
+  kütüphaneyi projemise ekledikten sonra angular.js içerisinde kütüphanenin hem css hemde javascript dosyalarını eklememiz gerekiyor.
+  daha sonra alertify.service.ts dosyasını oluşturuyoruz, bir yerden methodları oluşturmak için ve nereye bunu inject edersek orada kullanmış olacağız. 
+
+  31)Databesi silmek için PS C:\Users\nuhay\Desktop\SocialApp\ServerApp> dotnet ef database drop --force (bu yöntemle database içerisindeki herşeyi silmiş olduk)
+    --force açık bir bağlantıda bulunuyorsa bunu göz ardı etmesi için
+    Drop işlemini yaptıktan sonra migration dosyalrı duruyordu bunları tekrardan oluşturmak için databesi update ettik(database içerisnde bilgi olmadan tekrardan oluşturuldu)
+
+  32)SeedDatalarımızı oluşturmak için /Data/SeedDatabase içerisnde yapıyı oluşturduk ve bunu kullanabilmek için startup.cs içerisinde Configure methodu altında kullandık
+                if (env.IsDevelopment())
+            {
+                SeedDatabase.Seed(userManager).Wait();
+            }
+     IsDevelopment olduğu için launch setting içerisinde Environment bilgisnide Development olarak değiştirdik
+     sonra projeyi çalıştırdım ve seed datalar oluşmuş oldu 
+
+  33)Repository Sınıflarının Eklenmesi
+    ilk olarak ISocialRepository sınıfını oluşturdum sonra SocialRepository sınıfımı oluşturdum ve ISocialRepository sınıfımdan miras aldım. son olarakta userController sınıfım içerisnde referansını oluşturarak kullandım.
+
+
+  34)
+      public async Task<IActionResult> GetUsers()
+    {
+        var users = await  _repository.GetUsers();
+
+        var liste =new List<UserForListDTO>();
+        
+    foreach(var user in users)
+    {
+        liste.Add(new UserForListDTO() {
+            Id = user.Id,
+            UserName = user.UserName,
+            Gender =user.Gender
+        });
+    }
+
+        return Ok(liste);
+    }
+   ---> Yukarıdaki yapıda DTO kullanarak bize gelen bilgiler üzerinde filtreleme işlemi yapıyoruz ama bu dto'yu her kullandığımız yerde bu şekilde bir atana işlemini yazmak biraz anlamsız 
+        -bunun yerine AutoMapper kütüphanesinin kullanımı tercih ediliyor.
+
+ 35) AutoMapper kütüphanesiniyüklemek için ctrl+shift+p sonrasında automapper yazıp enter ve ->AutoMapper.Extensions.Microsoft.DependencyInjection
+     daha sonrasında uygulamaya outoMapperi tanıtmak için startup.cs içerisine gidip services.AddAutoMapper(typeof(Startup)); ekledik.
+     daha sonra mapper bilgilerini tanımlamak için ServerApp altında Helpers klasörünü oluşturduk ve MapperProfiles sınıfı içerisnde gerekli tanımlamaları yaptık.
+     en sonunda yukarıdaki uzun kodun kısa hali bu şekilde -> var listOfUsers = _mapper.Map<List<UserForListDTO>>(users);
+
+    -------------
+
+     CreateMap<User, UserForListDTO>()
+            .ForMember(dest => dest.Image, opt =>                                  //dest.Image UserForListDTO İçerisinde bizim dodurmak istediğimiz alan
+            opt.MapFrom(src => src.Images.FirstOrDefault(i => i.IsProfile)));      //resimler içerisinden IsProfile alanı true olan bilgiyi alacak 
+            
+    Eğer direkt olarak  CreateMap<User, UserForListDTO>(); şeklinde kullansaydım User db de buluan bilgileri getirirken Dto içerisinde ben bir resim almak istiyorum 
+    ama User db de birden çok resim var hangisini alaacağını bilmiyor ve null olarak dönüyor bunu önlemek için mappaer içerisinde özelliklerini belirtmem gerekiyor.
+
+    ------------
+
+           .ForMember(dest => dest.Age, opt => 
+         opt.MapFrom(src => src.DateOfBirth.CalculateAge()));     
+         //buradaki Calculate methodu normalde DateTime içerisnde extend olan bi method değil bizde o yüzden ayrı olarak yazma ihtiyacı hissettik ve ServerApp->Helper altındaki ExtensionMethods klasını oluşturup fonksiyonumuzu tanımladık ve kullandık.!!!
+ 
+ 
+  36)ClientApp->user.service.ts içerisnde get isteklerinde bulunduğumuz link'e giderken token bilgisiyle beraber gitmemiz gerekiyor.
+     user.service.ts içerisinden
+      const httpOptions={
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer' + localStorage.getItem('token');
+        })
+      }
+      şeklinde httpOptions bilgimizi oluşturup istekte bulunduğumuz satırlara ekleyerek yapabiliyorduk ama bu çok zahmetli ve kullanışsız bunun yerine app.module.ts içerisine 
+      gular2-jwt kütüphanesini kullanarak tokun bilgisinin gideceği ve gitmeyeceği yerleri belirlerdik
+      (This library provides an HttpInterceptor which automatically attaches a JSON Web Token to HttpClient requests.)
+      app.module.ts eklenenler:
+
+      import { ErrorInterceptor } from './_services/error.intercaptor';
+      ------
+      export function tokenGetter() {
+        return localStorage.getItem("token");
+      }
+      -----
+        JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:5000"],
+        disallowedRoutes: ["localhost:5000/api/user"],
+      },
+    }),
+   
+
+   37)VSCODE EXTENTİONS
+      liveServer - (html yapılarında oluşturulan depğişiklikleri anında browser ekranına aktarıyor.)
+      prettier -format document (html yapılarında oluşturulan yapıyı format Document deyince hizalıyot)
+      material Icon Theme -(dosyaları iconlarıyla gösteriyor)
+      Deepdark Material Theme - güzel tema
+      Better Comments- koyduğun komentleri çeşitlendirebiliyorsun (* veya !)
+      Tabnine AI Autocomplete for Javascript, Python, Typescript, PHP, Go, Java, Ruby & more -otomatik tamamlama sağlıyor 
+      HTML CSS Support- 
+      JavaScript (ES6) snippets-
+
+
+
+   38)ng g c ComponentIsmi ile componenti oluşturduktan hemen sonra  route.ts içerisnde ComponentIsmi için bir route oluşturuyoruz.!!
+      ve bu route için token bilgisi gerekiyorsa AuthGuard'du eklemek gerekiyor.!!
+
+    39)Route Resolver nedir ve hangi amaçla kullanılır??
+     serverden beklediğimiz bilginin gelmeden component sayfamızın yüklenmesi ve bizim ulaşmak istediğimiz değerimizin o an undifined olması bunun önüne geçmek için kullnıyoruz.
+     ilk olarak clientapp->src->app-> _resolvers klasörünü ekledik ve ve resolveri yazdığımız sayfa için bir dosya oluşturduk member-edit.resolver.ts ve bu bir servis olacak o yüzden injectable decoreterini eklememiz gerekiyor. 
+     içerisinde oluşturduğumuz MemberEditResolver clasının resolver olabilmesi için önceden tanımlanmış olan bir interfaceyi implement etmesi gerekiyor. (implement Resolve<user> -generic olduğu için User bildimizide verdik)
+    //member-edit.resolver.ts
+    //buradaki decodedToken bilgisi auth.service.ts içerisinden geliyor ve bize aktif olan kullanıcının token bilgisinin dicode edilmiş halini getiriyor.
+    //burade getUser bize bir absorvable user bilgisi döndürecek eğer burdan bir hata varsada bunu pipe ile birleştiriyoruz(yakalıyoruz)
+    //alertfy sayesinde hatayı gördükten sonra kullanıcıyı navigate ile yönlendiriyoruz en sonda of parametresiyle geriye obsarvable döndürmüş oluyoruz
+    // daha sonra digip app.module.ts içerisinde tanıtmamız gerekiyor ->provider altında import ediyoruz  ve artık module artık MemberEditResolver'i tanıyor
+    //daha sonra route.ts içerisnde componet yüklenmeden önce user bilgisinin bize nereden geleceğini belirtmiş oluyoruz
+    // son olarak resolverden gelen user bilgisini member-edit.component içerisinden alılıyoruz.
+
+
+    40)date türündeki verileri sitediğimiz formatta kullanabiliyoruz (angular date pipe) diye aratabilirim
+              <div>
+            <strong>Created Date</strong>
+            <p>{{ user?.created | date:'short'}}</p>
+          </div>
+          2023-07-08T14:58:24.2801134  -->  8/7/23, 2:58 PM
+
+      ---------------
+
+      (ngx-timeago) kütüphanesiyle last active alanını ayarlayabiliriz
+      clientApp altındayken terminalde npm install ngx-timeago  ile dahil ettik
+      sonra sırasıyla dökümanda yazan şeyleri yapmaya başlıyoruz.
+      app.module içerisine import içerisine, TimeagoModule.forRoot()'tu ekledim 
+
+                <div>
+            <strong>Last Active</strong>
+            <p>{{ user?.lastActive | timeago }}</p>
+          </div>
+
+      kullanım şekli böyle ve direkt son aktif olduğu zamanı bildiriyor
+
+    
+    41)(Filters in ASP.NET Core) başlığı altında biraz incelemede bulunduk 
+      ServerApp altında Helpers klasörü içerisine LastActiveActionFilters sınıfını oluşturup işlemlerimize başlıyourz 
+      /last active alanını ayarlayabilemk için (Filters in ASP.NET Core) yaoılarından faydalanarak middlware mantığıyla işlemlerimiz yapıp lastSctive alanımızı düzenlemeye çelışıyoruz
+      //LastActiveActionFilters calsımız IAsyncActionFilter'dan türetilecek ve implement etdilecek.
+      Startup.cs içerisinde bulunan services.AddScoped<ISocialRepository, SocialRepository>(); alanı bulunulan talepte bir nesne oluşturuyor ve bu nesnele sayesiylede biz ISocialRepository'i impelemet etitğimiz yerlerde sorgularımızı methodlarımızı direkt çağırabiliyoruz. 
+      o süreç içerisinde oluşturulan nesneyi uygulaa içerisnde controller kullanıyorsak constructor içerisinde inject işlemine tabi tutuyoruz ve inject işlemi bize nesneyi getiriyor.
+      biz bir class içerisinde inject işlemi yapmadan service bilgisinin kopyasını almak istiyoruz. bunun içinde gerekli işlemleri LastActiveActionFilters sınıfı içerisinde yaptık.
+
+     Daha sonra oluşturduğumuz LastActiveActionFilters sınıfını nerede sürecin içerisine dahil edeceğimize vaktık ve UserController içerisinde sayfanın başına  [ServiceFilter(typeof(LastActiveActionFilters))] şeklinde dahil ettik
+     UserController sayfamız ilk çalıştığında Authorize çalışacak daha sonrada action filter çalışacak( [ServiceFilter(typeof(LastActiveActionFilters))]) ve action filter içerisinde last Acitve alanı güncelleniyor.
+     ->yani login olan herhangi bir kullanıcı UserCıntroller içerisindeki bir methodu çağırdığı zaman lastActive tarihi o anda güncelenecek
+
+     bunları yaptıktan sonra startup.cs içerisinde  tanımlamamız gerekiyor. ->services.AddScoped<LastActiveActionFilters>();
+
+  42)QUERY PARAMETRELERİ -> //api/users?followers=true
+    User için olan query parametrelerini yazmaya başlıyoruz filtreleme ilemlerimizde kullanacağız(UserQueryParams)
+    örneğin: getusers methoduna ayrı ayrı parametreler eklemektense UserQueryParams model sınıfımız sayesinde parametreleri tek bir yerde tanımlayıp ihtiyaca göe kullanıyoruz 
+
+  43)AsQueryable çalıştırılmayan bir sorgu oluşturmamıza yarıyor ->SocialRepository içerisnde Getusers Methodunda 
+            //bütün kullanıcıları alma yöntemimiz aşağıdaki gibiydi 
+        //tüm user bilgileri geldikten sonra filtreleme yapmak mantıklı değildi o yüzden sorguyu aşağıdaki yöntemle 
+        // .AsQueryable ile çalıştırılmayan bir sorguya dönüştürüp bu sorguyu filtrelemeler bittikten sonra en son ToListAsync() ile çalıştıracağız. 
+        // public async Task<IEnumerable<User>> GetUsers(UserQueryParams userParams)
+        // {
+        //     var users = await _context.Users
+        //     .Where(i => i.Id != userParams.UserId)
+        //     .Include(i => i.Images)
+        //     .ToListAsync();
+        //     return users;
+        // }
+
+        public async Task<IEnumerable<User>> GetUsers(UserQueryParams userParams)
+        {
+            var users = _context.Users
+            .Where(i => i.Id != userParams.UserId)
+            .Include(i => i.Images)
+            .AsQueryable();
+
+            if (userParams.Followers)
+            {
+                //takip edenler 
+                var result = await GetFollows(userParams.UserId, true);
+                users = users.Where(u => result.Contains(u.Id));
+            }
+
+            if (userParams.Following)
+            {
+                //takip edilenler
+                var result = await GetFollows(userParams.UserId, false);
+                users = users.Where(u => result.Contains(u.Id));
+            }
+
+            return await users.ToListAsync();
+        }
+
+        UserController içerisine FollowUser methodunu ekledik ve bunu get user içerisnde kullandık bu işlemler önemliydi!!
+
+  44) ServerApp tarafında Query parametresi işlemlerini tamamladıktan sonra ClientApp tarafında user.service çerisinde getUsers methodu içerisinde düzenlemeler yaptık.
+
+  45)Yapmış olduğumuz asenkron sorguların bie ne zaman geleceği belli değil bu  üzden kullanıcıya veri getirilirken loading resmi gösermek için  uygulamamıza ngx-loading kütüphanesini dahil ettik (kütüphanenin kullanımı için dökümantasyonu çok basit)
+  ClientApp-> npm install --save ngx-loading  (dahil etmeye çalıştım ama angular version uyumsuzluğundan olmadı)
+  pacjage.json dosyası içerisinden 
+  "dependencies": {
+  // Diğer bağımlılıklar
+  "@angular/common": "^15.0.0",
+  // Diğer bağımlılıklar
+}
+@angular/common versionunu 16.0.0 dan 15.0.0'a çevirip ->npm install ->npm install ngx-loading ->npm start
+
+
+45)79.ders sona doğru kullancının kaydolurkenki bilgilerine göre ana sayfanın nasıl filtreleneceğine dair taktikler verdi.
+
+46)82.Ders içeriğinde mesaj göndermi için bir modal kullnmayı düşündük ve modal kullanımı gibi içerikler için hazırlanmış ng-modal kütüphanesini bulunduk
+   ng bootstrap'i googlede araştırarak (herşey Dökümantasyonda mevcut)
+   ClientApp-> ng add @ng-bootstrap/ng-bootstrap
+   Sonra ng-bootstrap kütüphansesini projemize indiridikten sonra ng-bootsrap içerisindeki tüm componenetleri kullanabilirim
+   sonra app.module'yi içerisine NgbModule'yi aktardığımız zaman bürün componenetleri kullanıcak hale geliyoruz
+   (version uyumsuzluğundan dolayı kullanamdık bootsrap 15.0.0 desteklenen bootstrap versionu)
+
+   NgModumember-details.component' sayfasında NgModule içerisinde bulunan Ngmodal servisini çağırarak openSendMessageModel() methodu içerisinde kullanımını sağladık

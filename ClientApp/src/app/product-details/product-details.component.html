@@ -1,0 +1,23 @@
+<div *ngIf="product">
+
+  <input #id type="hidden" name="id" [value]="product.productId">
+
+  <!-- eğer bize gerçekten gelen bir product bilgisi varsa bu işlemleri yapmak ngIf kullandık(Product bilgisinin gelmeme ihtimalide var) -->
+  <div class="form-group">
+    <label for="name">name</label>
+    <input [value]="product.name" #name type="text" class="form-control" name="name">
+    <!-- burada verdiğimiz #name sayesinde girilen input değerine istediğimiz yerden ulaşabiliriz -->
+  </div>
+  <div class="form-group">
+    <label for="price">price</label>
+    <input [value]="product.price" #price type="text" class="form-control" name="price">
+  </div>
+  <div class="form-group">
+    <div class="custom-control custom-checkbox">
+      <input [checked]="product.isActive" #isactive type="checkbox" class="custom-control-input" id="isActive">
+      <label for="" class="custom-control-label" for="isActive"></label>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="addProduct(id.value,name.value,price.value,isactive.checked); name.value=''; price.value=''; isactive.checked=false;">Save Product</button>
+  <!-- (click)="addProduct(name.value,price.value,isactive.checked); name.value=''; price.value=''; isactive.checked=false;" -->
+</div>
