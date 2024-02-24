@@ -5,7 +5,7 @@ To develop a service-based modern dynamic application, I developed an example da
 
 I learned how to write ASP net core web api services and how to develop front-end using Angular 9 as the client application type.
 
-## Application Features
+## Application features:
 - SQL Database with Entity Framework Core. 
 - CRUD operations over the service. 
 - Creating User with Asp net Core Identity. 
